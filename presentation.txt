@@ -1,0 +1,83 @@
+Introduction - Lakshan
+  - Imagine you go to a video store you need to find a good title
+  - How do you pick?
+    - Ask from the shop helper
+    - Call your friends
+    - Do a google search on the title
+  - Problem getting context sensitive information easily and quickly
+  - Rapid growth of Mobile computing
+
+Similar Work - Lakmini
+  - TEDTalk 6th Sense Project
+  - Layars Browser
+    
+  Disadvantages
+  - Requires special devices (ie. iPhone)
+  - Costly
+  - Needs lot of processing power
+  - slow response time
+Since it's based on context fast response is essential for decision making!
+
+Aim and Objectives:
+
+  Find an alternative solution to context based image retrieval using augmented reality and image recognition techniques
+
+Our Approach - Sithija
+  - Our main intention was to build a solution that everyone can use 
+  - It doesn't depend on highly sophisticated technologies and devices
+  - Works on a Ubiquitous environments (mobile, laptop)
+  - Performs faster with a quick response time
+
+    Now to understand the context of the information,  we content based image retrieval.
+    CBIR means -
+    
+    To present those information in the same context we use the Augmented Reality cocept. Due to this user experience will be very high.
+    They will be more convienient as users don't need to switch screens, or enter manully.
+
+    To improve performance we use a client server model. So image processing will be happend on server. Within the server again we use distributed computing concepts such as Map-Reduce. This is the same technology Google users in their searching alogirthms. How it happens?
+
+
+Technologies We adapted: Namal
+
+  Content Based Image Retrieval - 
+    - To identify the context
+
+  Distributed System (Map-Reduce) -
+    - To buld a faster responsive solution
+    - Works on a client-server model
+    - scalable
+
+  Uses basic Augmented Reality -
+    - To present the most essential information in user's context
+
+System Design -
+  Diagram of full system
+
+Implementation  Sameera
+ Server 
+    - Ruby as programming language
+    - For content based image retrival we have used Hornetseye Library
+    - Normal Cross Correlation
+    - Event based distributed processing (uses concept of Map-Reduce)
+    - Sinatra based web service API for tagging and searching (any device/application can connect use the server via this interface) 
+
+    - Web Client 
+      Adobe Flex based Rich Media Application (utilizes a web cam)
+
+  Client 
+    - Mobile
+      Built for using Python can run on Symbian platform
+      It uses built-in features in mobile - camera, connection
+      we have used the regular features available in most of the mobile
+      Phone doesn't require advanced processing power or 
+      J2ME based client for other devices
+ 
+
+Future Work - Sithija
+    - Our concept can be applied to many other industries - Travel, Real-estate, Consumer products, Digital arts
+    - We hoping to do a commerical release of this application.
+    - Commericial implementaion should be integrate with other web services to provide semantic information.
+
+    - ability to identify 3-D objects
+    - Add additional context identifiers such as GPS, gravimeter support (angle, position of the device)
+

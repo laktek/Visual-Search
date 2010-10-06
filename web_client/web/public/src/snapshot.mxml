@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" 
+  applicationComplete="init();" height="395" width="860" styleName="mystyle" 
+  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#D8D8D8, #A1A1A1]" >
+  <mx:Script>
+    <![CDATA[
+      // http://tinkerlog.com
+      // article reference 
+      // * webcam http://www.adobe.com/devnet/air/flex/articles/uploading_air_app_to_server_06.html
+      // * base64 http://www.dynamicflash.com/goodies/base64
+      //
+      import flash.media.Camera;
+      import com.tinkerlog.WebCam;
+      import com.dynamicflash.util.Base64;
+      import mx.core.UIComponent;
+      import mx.graphics.codec.JPEGEncoder;
+	  import mx.events.FlexEvent;
+
+      
+      private var webCam:WebCam;
+      
+      private function init():void {
+        webCam = new WebCam(380, 270);
+        var ref:UIComponent = new UIComponent();
+        preview.removeAllChildren();      
+        preview.addChild(ref);
+        ref.addChild(webCam);
+      }
+      
+      private function enableSubmit():void {      	      
+                setTimeout(takeSnapshotstart, 7000);
+      }
+      
+
+      private function takeSnapshotstart():void {
+        imageViewer.visible = true;
+        imageViewer.width = 400;
+        imageViewer.height = preview.height;
+        var uiComponent : UIComponent = new UIComponent();
+        
+        //imageViewer.addEventListener(Event.ADDED, uploadSnapshot);
+        
+        uiComponent.width = 380;
+        uiComponent.height = webCam.height;
+        var photoData:Bitmap = webCam.getSnapshot();        
+        var photoBitmap:BitmapData = photoData.bitmapData;
+         
+         var jpgEncoder:JPEGEncoder = new JPEGEncoder(100);
+         var jpgBytes:ByteArray = jpgEncoder.encode(photoBitmap);        
+         state.text = "starting upload ...";
+         uploadPhoto(jpgBytes);
+          
+		//uploadSnapshot(photoBitmap);
+                         
+        uiComponent.addChild(photoData);  		                           
+        imageViewer.removeAllChildren();                 
+        imageViewer.addChild(uiComponent);
+                
+        //state.text = "start";		
+      }
+
+    
+
+      
+      private function uploadSnapshot(event:Event):void {
+		//trace("server: " + event.target);
+        
+        if (imageViewer.getChildren().length > 0) {
+          var uic:UIComponent = imageViewer.getChildAt(0) as UIComponent;
+          var bitmap:Bitmap = uic.getChildAt(0) as Bitmap;
+          var jpgEncoder:JPEGEncoder = new JPEGEncoder(75);
+          var jpgBytes:ByteArray = jpgEncoder.encode(bitmap.bitmapData);        
+          state.text = "starting upload ...";
+          uploadPhoto(jpgBytes);
+          state.text = "upload done";
+        }
+      }
+      
+      private function deleteSnapshot():void {
+        imageViewer.removeAllChildren();
+        enableSubmit();
+        state.text = "";
+      }
+      
+          
+      private function uploadPhoto(imageData:ByteArray):void {
+        var request:URLRequest = new URLRequest("http://172.25.100.10/upload.php");
+        var vars:URLVariables = new URLVariables();
+        vars.name = "book";
+
+        vars.bindata = Base64.encodeByteArray(imageData);
+        request.method = "POST";       
+        var loader:URLLoader = new URLLoader();               
+        loader.addEventListener(Event.COMPLETE, uploadPhotoHandler);
+        request.data = vars;
+        loader.load(request);        
+      }
+      private function uploadPhotoHandler(event:Event):void {
+        trace("server: " + event.target.data);
+        state.text = "Response from server: " + event.target.data;
+      }
+    ]]>
+  </mx:Script>
+  
+  
+  <mx:Button label="Snap" id="snapshota" click="enableSubmit();" x="20" y="10" width="147"/>
+  <mx:Button label="Delete" id="deleteButton" click="deleteSnapshot();" x="175" y="10" width="132"/>
+  <mx:Panel width="400" height="310" layout="absolute" title="Snapshot" id="imageViewer" x="440" y="55"/>
+  <mx:Panel width="400" height="310" id="preview" title="Snapshotr" y="55" x="20" fontFamily="Arial"/>
+  <mx:Label x="10" y="373" width="780" id="state"/>
+</mx:Application>

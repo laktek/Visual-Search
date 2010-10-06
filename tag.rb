@@ -1,9 +1,10 @@
-require "vendor/moneta/lib/moneta/basic_file"
+require File.dirname(__FILE__) + "/vendor/moneta/lib/moneta/basic_file"
 
 class Tag
 
   def self.store(tag, file)
-    system "convert #{file} -gravity center -crop '100x100+0+0' +repage templates/#{tag}.jpg" 
+    template_file = File.join(File.dirname(__FILE__), "templates", "#{tag}.jpg")
+    system "convert #{file} -gravity center -crop '100x100+0+0' +repage #{template_file}" 
 
     store = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "tags")) 
     current_tags = store.delete("tags")
@@ -12,4 +13,3 @@ class Tag
 
 end
  
-Tag.store(ARGV[0], ARGV[1])

@@ -18,11 +18,22 @@ module Map
       shiftx = shiftx - image.shape[0] - template.shape[0] if shiftx > image.shape[0]
       shifty = shifty - image.shape[1] - template.shape[1] if shifty > image.shape[1]
 
-      withinx = ((image.shape[0]/2 - 150)..(image.shape[0]/2 + 150)).include?(shiftx)
-      withiny = ((image.shape[1]/2 - 150)..(image.shape[1]/2 + 150)).include?(shifty)
-      return (withinx && withiny) 
+      puts shiftx
+      puts shifty
+
+      withinx = ((image.shape[0]/2 - 75)..(image.shape[0]/2 + 75)).include?(shiftx)
+      withiny = ((image.shape[1]/2 - 75)..(image.shape[1]/2 + 75)).include?(shifty)
+
+      puts withinx
+      puts withiny
+
+      if (withinx && withiny) 
+        [shiftx - (image.shape[0]/2 - 50), shifty - (image.shape[1]/2 - 50) ].inject(0) { |deviation, v| deviation + v.abs}
+      else
+        return nil
+      end
     rescue
-      return false
+      return nil 
     end
   end
 
@@ -30,19 +41,23 @@ module Map
     tuple = Marshal.load(packet)
     target_image = tuple[0]
     templates = tuple[1]
-    valid_results = []
+    valid_results = {} 
 
     templates.each do |template|
       template_image = "templates/#{template}.jpg"
-      valid_results << template if match_image(target_image, template_image)
+      if deviation = match_image(target_image, template_image)
+        valid_results.store(template, deviation)
+      end
     end
 
+    puts valid_results.inspect
     output = Marshal.dump(valid_results)
 
     send_data(output)
     close_connection_after_writing
   end
 end
+
 EM.run {
   EM.start_server("localhost", 5555, Map)
   EM.start_server("localhost", 6666, Map)

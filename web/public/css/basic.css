@@ -1,0 +1,83 @@
+/*
+-------------------------------------------------------------------
+Bezago
+Initial Stylesheet
+Vesess - http://vesess.com
+-------------------------------------------------------------------
+*/
+
+/* =INITIAL 
+   v2.1, by Faruk Ates - www.kurafire.net
+   Addendum by Robert Nyman - www.robertnyman.com */
+
+/* Neutralize styling: 
+   Elements we want to clean out entirely: */
+html, body, form, fieldset {
+	margin: 0;
+	padding: 0;
+	font: 100%/150% "Georgia","Times New Roman",Times,serif;
+}
+
+/* Neutralize styling: 
+   Elements with a vertical margin: */
+h1, h2, h3, h4, h5, h6, p, pre,
+blockquote, ul, ol, dl, address {
+	margin: 1em 0;
+	padding: 0;
+}
+
+/* Apply left margin:
+   Only to the few elements that need it: */
+li, dd, blockquote {
+	margin-left: 0em;
+}
+
+/* Miscellaneous conveniences: */
+form label {
+	
+}
+fieldset {
+	border: none;
+}
+
+/* Form field text-scaling */
+input, select, textarea {
+	font-size: 100%;
+	font-family: Arial, sans-serif;
+	
+}
+
+/*
+-------------------------------------------------------------------
+Bezago
+Main Stylesheet
+Vesess - http://vesess.com
+-------------------------------------------------------------------
+*/
+
+/* Base styles 
+------------------------------------------------------------------- */
+body {font-size: 80%; color: #000; margin: 0;padding: 0; background: url(bk.png) repeat-x;}
+
+h1 { font-size: 120px; font-weight: normal;  }
+h2 { margin: 10px 0; font-size: 160%; font-weight: normal; }
+h3 { margin:10px 0; font-weight: normal; color:#FFFFFF; font-size:145%;}
+h4 { font-size: 100%; }
+
+/** remove outer line in mozilla */
+a 			{ color: #00467f; }
+a img 		{ border: 0; }
+hr.hidden 	{ margin: 0; padding: 0; border: 0; height: 1px; }
+.hidden  	{ visibility: hidden; }
+.clear	  	{ clear: both; }
+.hide { display: none; }
+.higlight { font-weight: bold; color: #4D820D;  }
+.left { margin: 0 10px 10px 0; float: left; }
+
+
+/** header styles*/
+
+	div#wrapper			{ margin: 0 auto; width: 860px;  height: 573px;  }
+	div.form-container { margin: 10px 0 ; padding:10px; background: #FFF298; border: 1px solid #FFE840;}
+	div.form-container input#tag { margin: 5px 10px 0 5px; }
+	div.form-container input { margin: 5px 0 0 5px; }	
